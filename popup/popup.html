@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HomeBuild Timer</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🏠 HomeBuild Timer</h1>
+    </header>
+
+    <main>
+      <!-- House SVG Container -->
+      <div id="house-container" class="house-container">
+        <!-- SVG will be loaded here -->
+      </div>
+
+      <!-- Timer Display -->
+      <div id="timer-display" class="timer-display hidden">
+        <span id="time-left">25:00</span>
+        <div class="progress-bar">
+          <div id="progress-fill" class="progress-fill"></div>
+        </div>
+        <span id="progress-text">0%</span>
+      </div>
+
+      <!-- Status Message -->
+      <div id="status-message" class="status-message hidden"></div>
+
+      <!-- Controls -->
+      <div id="controls" class="controls">
+        <div class="input-group">
+          <label for="duration">Focus Duration (min):</label>
+          <input type="number" id="duration" value="25" min="1" max="120">
+        </div>
+        <button id="start-btn" class="primary-btn">Start Focus</button>
+      </div>
+
+      <!-- Allowlist -->
+      <div id="allowlist-section" class="allowlist-section">
+        <h3>Allowed Sites</h3>
+        <ul id="allowlist" class="allowlist">
+          <!-- List items injected via JS -->
+        </ul>
+        <div class="add-domain">
+          <input type="text" id="new-domain" placeholder="e.g. github.com">
+          <button id="add-domain-btn" class="secondary-btn">+ Add</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

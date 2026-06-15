@@ -1,0 +1,323 @@
+:root {
+  --bg-color: #fdf6e3;
+  --text-color: #5c4b51;
+  --primary-color: #e27d60;
+  --secondary-color: #85cdca;
+  --danger-color: #e8a87c;
+  --border-color: #e5d8d0;
+  --card-bg: #fffcf8;
+}
+
+body {
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  font-family: 'Quicksand', 'Segoe UI', system-ui, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  box-sizing: border-box;
+}
+
+.container {
+  padding: 20px;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+header h1 {
+  font-size: 1.4rem;
+  margin: 0 0 20px 0;
+  text-align: center;
+  color: #c38d9e;
+  font-weight: 600;
+}
+
+/* House Container */
+.house-container {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 20px auto;
+  position: relative;
+  background-color: var(--card-bg);
+  border-radius: 50%;
+  box-shadow: 0 8px 24px rgba(226, 125, 96, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+/* Timer Display */
+.timer-display {
+  text-align: center;
+  margin-bottom: 20px;
+  background-color: var(--card-bg);
+  padding: 16px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+
+.timer-display.hidden {
+  display: none;
+}
+
+#time-left {
+  font-size: 2.5rem;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 12px;
+  color: var(--primary-color);
+}
+
+.progress-bar {
+  width: 100%;
+  height: 12px;
+  background-color: var(--border-color);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: var(--secondary-color);
+  width: 0%;
+  transition: width 1s linear;
+}
+
+#progress-text {
+  font-size: 0.85rem;
+  color: #a89f91;
+  font-weight: bold;
+}
+
+/* Status Message */
+.status-message {
+  text-align: center;
+  padding: 12px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  font-weight: bold;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.status-message.hidden {
+  display: none;
+}
+
+.status-warning {
+  background-color: #f3b562;
+  color: white;
+}
+
+.status-danger {
+  background-color: #e27d60;
+  color: white;
+}
+
+.status-success {
+  background-color: #85cdca;
+  color: white;
+}
+
+/* Controls */
+.controls {
+  margin-bottom: 20px;
+  background-color: var(--card-bg);
+  padding: 16px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+
+.controls.hidden {
+  display: none;
+}
+
+.input-group {
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+}
+
+input[type="number"], input[type="text"] {
+  padding: 8px 12px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  outline: none;
+  font-family: inherit;
+  color: var(--text-color);
+  transition: border-color 0.2s;
+  background-color: transparent;
+}
+
+input:focus {
+  border-color: var(--secondary-color);
+}
+
+input[type="number"] {
+  width: 60px;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-weight: bold;
+  transition: transform 0.1s, background-color 0.2s;
+  font-family: inherit;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+.primary-btn {
+  width: 100%;
+  background-color: var(--primary-color);
+  color: white;
+  font-size: 1.1rem;
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(226, 125, 96, 0.3);
+}
+
+.primary-btn:hover {
+  background-color: #d16b4e;
+}
+
+.secondary-btn {
+  background-color: var(--secondary-color);
+  color: white;
+  box-shadow: 0 2px 8px rgba(133, 205, 202, 0.4);
+}
+
+.secondary-btn:hover {
+  background-color: #72b9b6;
+}
+
+/* Allowlist */
+.allowlist-section {
+  background-color: var(--card-bg);
+  padding: 16px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+
+.allowlist-section h3 {
+  font-size: 1.1rem;
+  margin: 0 0 12px 0;
+  border-bottom: 2px dashed var(--border-color);
+  padding-bottom: 8px;
+  color: #c38d9e;
+}
+
+.allowlist-section.hidden {
+  display: none;
+}
+
+.allowlist {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px 0;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+/* Scrollbar styling for coziness */
+.allowlist::-webkit-scrollbar {
+  width: 6px;
+}
+.allowlist::-webkit-scrollbar-track {
+  background: transparent;
+}
+.allowlist::-webkit-scrollbar-thumb {
+  background-color: var(--border-color);
+  border-radius: 3px;
+}
+
+.allowlist li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.allowlist li:last-child {
+  border-bottom: none;
+}
+
+.delete-btn {
+  background: none;
+  color: var(--danger-color);
+  padding: 4px 8px;
+  font-size: 1.2rem;
+  box-shadow: none;
+}
+
+.delete-btn:hover {
+  color: #d16b4e;
+  background-color: rgba(232, 168, 124, 0.1);
+  border-radius: 4px;
+}
+
+.add-domain {
+  display: flex;
+  gap: 8px;
+}
+
+.add-domain input {
+  flex-grow: 1;
+}
+
+/* Animations */
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+.anim-shake {
+  animation: shake 0.5s;
+  animation-iteration-count: infinite;
+}
+
+/* Add red tint for warning */
+.house-warning::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(226, 125, 96, 0.3);
+  pointer-events: none;
+  border-radius: 50%;
+}
+
+@keyframes collapse {
+  0% { transform: translateY(0) scaleY(1); opacity: 1; }
+  20% { transform: translateY(10px) rotate(5deg); }
+  40% { transform: translateY(30px) rotate(-5deg); }
+  100% { transform: translateY(100px) scaleY(0.2) rotate(10deg); opacity: 0; }
+}
+
+.anim-collapse {
+  animation: collapse 1s forwards ease-in;
+}
+
+/* Success glow */
+.house-success {
+  filter: drop-shadow(0 0 15px #f3b562);
+}

@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <style>
+    /* Default: all hidden */
+    .stage-foundation, .stage-walls, .stage-roof, .stage-details {
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+    /* Reveal when parent SVG has these classes */
+    svg.show-foundation .stage-foundation { opacity: 1; }
+    svg.show-walls .stage-walls { opacity: 1; }
+    svg.show-roof .stage-roof { opacity: 1; }
+    svg.show-details .stage-details { opacity: 1; }
+    
+    /* Colors */
+    .foundation { fill: #7f8c8d; }
+    .wall { fill: #ecf0f1; stroke: #bdc3c7; stroke-width: 2; }
+    .roof { fill: #e74c3c; stroke: #c0392b; stroke-width: 2; }
+    .door { fill: #8e44ad; }
+    .window { fill: #3498db; stroke: #2980b9; stroke-width: 2; }
+    .chimney { fill: #d35400; }
+  </style>
+
+  <!-- Foundation -->
+  <g class="stage-foundation">
+    <rect x="20" y="170" width="160" height="20" rx="2" class="foundation"/>
+  </g>
+
+  <!-- Walls -->
+  <g class="stage-walls">
+    <rect x="40" y="80" width="120" height="90" class="wall"/>
+  </g>
+
+  <!-- Roof -->
+  <g class="stage-roof">
+    <polygon points="100,20 20,80 180,80" class="roof"/>
+  </g>
+
+  <!-- Details -->
+  <g class="stage-details">
+    <!-- Chimney -->
+    <rect x="130" y="30" width="20" height="40" class="chimney"/>
+    <!-- Door -->
+    <rect x="85" y="130" width="30" height="40" class="door"/>
+    <!-- Windows -->
+    <rect x="55" y="100" width="20" height="20" class="window"/>
+    <rect x="125" y="100" width="20" height="20" class="window"/>
+  </g>
+</svg>
