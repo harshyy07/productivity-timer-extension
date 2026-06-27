@@ -116,6 +116,11 @@ header h1 {
   color: white;
 }
 
+.status-grace {
+  background-color: #f3b562;
+  color: white;
+}
+
 .status-success {
   background-color: #85cdca;
   color: white;
@@ -215,7 +220,8 @@ button:active {
   color: #c38d9e;
 }
 
-.allowlist-section.hidden {
+.allowlist-section.hidden,
+.stats-section.hidden {
   display: none;
 }
 
@@ -304,6 +310,81 @@ button:active {
   background-color: rgba(226, 125, 96, 0.3);
   pointer-events: none;
   border-radius: 50%;
+}
+
+/* Add yellow/orange pulse for grace period */
+@keyframes pulse {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(243, 181, 98, 0.7); }
+  70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(243, 181, 98, 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(243, 181, 98, 0); }
+}
+
+.house-grace {
+  animation: pulse 1.5s infinite;
+}
+.house-grace::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(243, 181, 98, 0.2);
+  pointer-events: none;
+  border-radius: 50%;
+}
+
+/* Stats Section */
+.stats-section {
+  background-color: var(--card-bg);
+  padding: 16px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+  margin-top: 20px;
+}
+
+.stats-section h3, .stats-section h4 {
+  margin: 0 0 12px 0;
+  color: #c38d9e;
+}
+
+.stats-section h3 {
+  font-size: 1.1rem;
+  border-bottom: 2px dashed var(--border-color);
+  padding-bottom: 8px;
+}
+
+.stats-section h4 {
+  font-size: 0.95rem;
+  margin-top: 16px;
+}
+
+.stats-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.95rem;
+}
+
+.stat-item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.text-success { color: var(--secondary-color); }
+.text-danger { color: var(--danger-color); }
+
+.stats-history {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.85rem;
+  color: #8c7e73;
+}
+
+.stats-history li {
+  padding: 4px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+.stats-history li:last-child {
+  border-bottom: none;
 }
 
 @keyframes collapse {

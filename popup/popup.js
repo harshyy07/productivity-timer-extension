@@ -50,6 +50,10 @@ async function init() {
         handleComplete();
       } else if (message.type === 'STOP_WARNING') {
         handleStopWarning();
+      } else if (message.type === 'GRACE_WARNING') {
+        handleGraceWarning();
+      } else if (message.type === 'GRACE_CANCELLED') {
+        handleGraceCancelled();
       }
     });
   } catch (err) {
@@ -63,6 +67,36 @@ async function init() {
 async function loadAllowlist() {
   const { allowlist = [] } = await chrome.storage.local.get('allowlist');
   renderAllowlist(allowlist);
+  await loadStats();
+}
+
+async function loadStats() {
+  const { stats = { totalFocusTime: 0, sessionsCompleted: 0, sessionsFailed: 0, history: [] } } = await chrome.storage.local.get('stats');
+  
+  const statsEl = document.getElementById('stats-summary');
+  if (statsEl) {
+    const hours = Math.floor(stats.totalFocusTime / 3600000);
+    const mins = Math.floor((stats.totalFocusTime % 3600000) / 60000);
+    
+    statsEl.innerHTML = `
+      <div class="stat-item"><span>Total Time:</span> <strong>${hours}h ${mins}m</strong></div>
+      <div class="stat-item"><span>Completed:</span> <strong class="text-success">${stats.sessionsCompleted}</strong></div>
+      <div class="stat-item"><span>Failed:</span> <strong class="text-danger">${stats.sessionsFailed}</strong></div>
+    `;
+  }
+  
+  const historyEl = document.getElementById('stats-history');
+  if (historyEl) {
+    historyEl.innerHTML = stats.history.slice(0, 5).map(session => {
+      const mins = Math.round(session.durationMs / 60000);
+      const isComplete = session.status === 'completed';
+      const date = new Date(session.date).toLocaleDateString();
+      return `<li>${isComplete ? '✅' : '❌'} ${mins}m on ${date}</li>`;
+    }).join('');
+    if (stats.history.length === 0) {
+      historyEl.innerHTML = `<li>No history yet.</li>`;
+    }
+  }
 }
 
 function renderAllowlist(allowlist) {
@@ -109,7 +143,8 @@ async function startTimer() {
     durationMs,
     endTime,
     warningCount: 0,
-    sessionDestroyed: false
+    sessionDestroyed: false,
+    gracePeriodActive: false
   });
 
   // Also store default duration for next time
@@ -139,6 +174,8 @@ async function checkTimerState() {
   if (state.timerActive) {
     controls.classList.add('hidden');
     allowlistSection.classList.add('hidden');
+    const statsSection = document.getElementById('stats-section');
+    if (statsSection) statsSection.classList.add('hidden');
     timerDisplay.classList.remove('hidden');
     
     // We remove the automatic warningCount check here, 
@@ -196,14 +233,18 @@ function updateHouseStage(progress) {
 function showIdle() {
   controls.classList.remove('hidden');
   allowlistSection.classList.remove('hidden');
+  const statsSection = document.getElementById('stats-section');
+  if (statsSection) statsSection.classList.remove('hidden');
   timerDisplay.classList.add('hidden');
   statusMessage.classList.add('hidden');
   if (svgDoc) svgDoc.classList.remove('show-foundation', 'show-walls', 'show-roof', 'show-details');
-  houseContainer.classList.remove('anim-shake', 'house-warning', 'anim-collapse');
+  houseContainer.classList.remove('anim-shake', 'house-warning', 'house-grace', 'anim-collapse');
   if (svgDoc) svgDoc.classList.remove('house-success');
+  loadStats(); // Refresh stats when returning to idle
 }
 
 function showWarningMessage() {
+  statusMessage.classList.remove('hidden');
   statusMessage.textContent = '⚠️ Return to your work!';
   statusMessage.className = 'status-message status-warning';
   houseContainer.classList.add('anim-shake', 'house-warning');
@@ -217,7 +258,19 @@ function handleWarning() {
 function handleStopWarning() {
   stopBuzz();
   statusMessage.classList.add('hidden');
-  houseContainer.classList.remove('anim-shake', 'house-warning');
+  houseContainer.classList.remove('anim-shake', 'house-warning', 'house-grace');
+}
+
+function handleGraceWarning() {
+  statusMessage.classList.remove('hidden');
+  statusMessage.textContent = '⏳ 5 seconds to return to work!';
+  statusMessage.className = 'status-message status-grace';
+  houseContainer.classList.add('house-grace');
+}
+
+function handleGraceCancelled() {
+  statusMessage.classList.add('hidden');
+  houseContainer.classList.remove('house-grace');
 }
 
 function handleDestroyed() {
@@ -233,7 +286,10 @@ function showDestroyed() {
   clearInterval(updateInterval);
   controls.classList.remove('hidden');
   allowlistSection.classList.remove('hidden');
+  const statsSection = document.getElementById('stats-section');
+  if (statsSection) statsSection.classList.remove('hidden');
   timerDisplay.classList.add('hidden');
+  statusMessage.classList.remove('hidden');
   
   statusMessage.textContent = 'Session failed. Try again.';
   statusMessage.className = 'status-message status-danger';
@@ -247,7 +303,10 @@ function showDestroyed() {
 function showComplete() {
   controls.classList.remove('hidden');
   allowlistSection.classList.remove('hidden');
+  const statsSection = document.getElementById('stats-section');
+  if (statsSection) statsSection.classList.remove('hidden');
   timerDisplay.classList.add('hidden');
+  statusMessage.classList.remove('hidden');
   
   statusMessage.textContent = 'Focus complete!';
   statusMessage.className = 'status-message status-success';
