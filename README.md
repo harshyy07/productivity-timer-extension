@@ -9,12 +9,12 @@ HomeBuild Timer is a gamified productivity Chrome Extension designed to help you
 - **Gamified Focus Timer:** Set a focus duration (in minutes) and watch your house build from foundation to chimney as the timer progresses.
 - **Dynamic Building Stages:**
   - 🧱 **0% – 24%**: Foundation is laid.
-  - 🧱 **25% – 49%**: Walls are erected.
+  - 🧱 **25% – 49%**: Walls are built.
   - 🏠 **50% – 74%**: Roof is added.
   - 🏡 **75% – 100%**: Finishing details (chimney, doors, windows) are completed!
-- **Smart Allowlist:** Define which domains are "productive" (e.g., `github.com`, `stackoverflow.com`). All other websites are blocked while the timer is active.
+- **Smart Allowlist:** Define domains that are "productive" (e.g., `github.com`, `stackoverflow.com`). All other websites are blocked while the timer is active.
 - **Double-Strike Violation System:**
-  - **Grace Period (5s):** Leaving the browser or visiting a non-allowed website triggers a 5-second grace period with a flashing amber warning overlay.
+  - **Sliding window(5s):** Leaving the browser or visiting a non-allowed website triggers a 5-second grace period with a flashing amber warning overlay.
   - **Strike 1 (Warning):** If you don't return to an allowed site in time, you receive your first strike. The house shakes violently and a red flash covers the page.
   - **Strike 2 (Failure):** A second violation causes the house to collapse entirely, failing the focus session.
 - **Session Stats & History:** Track your productivity progress with a dashboard showing total focus time, completed vs. failed sessions, and recent session history.
